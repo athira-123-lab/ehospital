@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'navigationbar.html' %}
+    {% load static %}
+
+     {% block body%}
+    <div class="container" style="margin-top:50px">
+     <h2 class="text-center">Register</h2>
+    <form method="post">
+    {% csrf_token %}
+    <label>username</label>
+    <input type="text" class="form-control" name="username" required>
+    <label>Name</label>
+    <input type="text" class="form-control" name="name" required>
+   <label>Mobile</label>
+    <input type="text" class="form-control" name="mobile" required>
+   <label>password</label>
+    <input type="text" class="form-control" name="password" required>
+    <label>confirm password</label>
+    <input type="text" class="form-control" name="password1" required>
+
+
+    <input type="submit" value="Register" class="form-control btn btn-warning">
+
+
+
+
+</form>
+{% endblock %}
+
+    </div>
+</body>
+</html>

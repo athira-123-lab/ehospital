@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'navigationbar.html' %}
+    {% load static %}
+
+     {% block body%}
+
+
+    <div class="container" style="margin-top:50px">
+     <h2 class="text-center">WELCOME</h2>
+     <form method="post">
+            {% csrf_token %}
+
+
+
+    <button class="col" ><li class="nav-item dropdown"><a class="nav-link dropdown-toggle"  data-toggle="dropdown" href="#">Doctor</a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'patient_details' %}">Patient details</a>
+                  <a class="dropdown-item" href="{% url 'schedule' %}">Schedule</a>
+                  <a class="dropdown-item" href="{% url 'add_patient' %}">Add patient</a>
+
+              </div>
+              </li></button><br><br><br>
+<button class="col"><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Patient</a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'booking' %}">Booking</a>
+                  <a class="dropdown-item" href="#">Medical history</a>
+                  <a class="dropdown-item" href="#">Billing and payment</a>
+
+
+              </div>
+              </li></button><br><br><br>
+         <button class="col" ><li class="nav-item dropdown"><a class="nav-link dropdown-toggle"  data-toggle="dropdown" href="#">Admin</a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'doctor_details' %}">Doctor details</a>
+
+                  <a class="dropdown-item" href="{% url 'add_doctor' %}">Add Doctor</a>
+
+              </div>
+              </li></button><br><br><br><br><br><br>
+
+
+
+         <a class="btn btn-primary btn-lg" href="{% url 'logout' %}">Logout</a>
+
+
+</form>
+
+{% endblock %}
+</body>
+</html>

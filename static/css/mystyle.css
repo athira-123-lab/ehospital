@@ -1,0 +1,22 @@
+.nav-link{
+color:white !important;
+}
+
+.nav-link:hover{
+color:black !important;
+background-color:red;
+border-radius:10px;
+}
+
+navbar-brand:hover{
+color:yellow !important;
+font-weight:bold;
+}
+
+btn-fixed-left {
+    position: fixed;
+    left:0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 20px;
+}

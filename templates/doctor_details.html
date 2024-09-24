@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'navigationbar.html' %}
+    {% load static %}
+
+     {% block body%}
+    <div class="container" style="margin-top:50px">
+     <h2 class="text-center">Doctor Details</h2>
+      <br><br>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>id</th>
+           <th> name</th>
+
+           <th>mobile</th>
+            <th>special</th>
+
+            <th>delete</th>
+        </tr>
+        </thead>
+          <tbody>
+          {% for i in doctor %}
+          <tr>
+              <td>{{i.id}}</td>
+               <td>{{i.name}}</td>
+               <td>{{i.mobile}}</td>
+               <td>{{i.special}}</td>
+
+              <td><a href="{% url 'delete_doctor'  %}"  onclick="return confirm('Are you sure ?)" class="btn btn-danger">Delete</a></td>
+          </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+    </div>
+      {% endblock %}
+</body>
+</html>
