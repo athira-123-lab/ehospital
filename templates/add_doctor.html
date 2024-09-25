@@ -21,7 +21,7 @@
             <input type="text" class="form-control" name="mobile" required>
 
             <label>special</label>
-            <input type="text" class="form-control" name="age" required>
+            <input type="text" class="form-control" name="special" required>
 
 
 
@@ -31,12 +31,12 @@
     </div>
 
 
-    {% if error == "yes" %}
+    {% if error == "no" %}
     <script>
         alert('Record saved successfully');
         window.location.href = '{% url "doctor_details" %}';
     </script>
-    {% elif error == "no" %}
+    {% elif error == "yes" %}
     <script>
         alert('Something went wrong, please try again.');
     </script>

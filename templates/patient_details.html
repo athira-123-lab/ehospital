@@ -32,11 +32,10 @@
                <td>{{i.name}}</td>
                <td>{{i.gender}}</td>
                <td>{{i.mobile}}</td>
-              <td>{{i.age}}</td>
+               <td>{{i.age}}</td>
                <td>{{i.address}}</td>
                <td>{{i.disease}}</td>
-              <td><a href="{% url 'view_prescription'  %}"  onclick="return confirm('Are you sure ?)" class="btn btn-warning">View</a></td>
-              <td><a href="{% url 'delete_patient'  %}"  onclick="return confirm('Are you sure ?)" class="btn btn-danger">Delete</a></td>
+              <td><a href="{% url 'delete_patient' i.id  %}"  onclick="return confirm('Are you sure ?')" class="btn btn-danger">Delete</a></td>
           </tr>
           {% endfor %}
           </tbody>

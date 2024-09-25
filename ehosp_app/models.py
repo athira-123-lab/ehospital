@@ -54,3 +54,10 @@ class Register(models.Model):
 
     def __str__(self):
         return self.name
+
+class Payment(models.Model):
+    name=models.CharField(max_length=255)
+
+    def save(self, *args, **kwargs):
+        self.amount = 100
+        super().save(*args, **kwargs)

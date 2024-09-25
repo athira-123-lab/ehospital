@@ -10,17 +10,25 @@
 
     {% block body %}
     <div class="container" style="margin-top: 50px;">
-        <h2 class="text-center">ADD PRESCRIPTION</h2>
-        <form method="post">
+        <h2 class="text-center">PAYMENT</h2>
+        <form method="post" action="{% url 'payment' %}">
             {% csrf_token %}
-            <label>Medicine </label>
+            <label>Patient Name</label>
             <input type="text" class="form-control" name="name" required>
 
-            <label>dosage</label>
-            <input type="text" class="form-control" name="mobile" required>
 
-            <br>
-            <input type="submit" value="ADD" class="form-control btn btn-primary">
+
+
+            <div class="form-group">
+
+                <label>Amount = 100 </label><br>
+
+                <button id="checkout" type="submit" class="link">check out</button>
+
+            </div>
+
+
+
         </form>
     </div>
 
@@ -28,7 +36,7 @@
     {% if error == "no" %}
     <script>
         alert('Record saved successfully');
-        window.location.href = '{% url "view_prescription" %}';
+        window.location.href = '{% url "success" %}';
     </script>
     {% elif error == "yes" %}
     <script>

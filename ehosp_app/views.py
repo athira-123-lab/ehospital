@@ -1,9 +1,15 @@
+
+import stripe
+from django.conf import settings
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+
 from django.shortcuts import render,redirect
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+from urllib3 import request
 
-from ehosp_app.models import Patient, Appointment, Prescription, Doctor
+from ehosp_app.models import Patient, Appointment, Doctor, Payment
 
 User = get_user_model()
 def Register(request):
@@ -94,7 +100,7 @@ def Add_patient(request):
 
     return render(request, 'add_patient.html', p)
 
-def Delete_patient(pid):
+def Delete_patient(request,pid):
 
     patient=Patient.objects.get(id=pid)
     patient.delete()
@@ -116,12 +122,14 @@ def Booking(request):
         time = request.POST.get('time')
 
 
+
         try:
 
             Appointment.objects.create(
                 name=name,
                 date=date,
                 time=time,
+
 
             )
             error = "no"
@@ -139,41 +147,6 @@ def Delete_appointment(request,pid):
     appointment=Appointment.objects.get(id=pid)
     appointment.delete()
     return redirect('schedule')
-
-def View_prescription(request):
-
-    prescription=Prescription.objects.all()
-    p={'prescription':prescription}
-    return render(request,'view_prescription.html',p)
-
-def Delete_prescription(pid):
-
-    prescription=Prescription.objects.get(id=pid)
-    prescription.delete()
-    return redirect('view_prescription')
-
-def Add_prescription(request):
-
-    error = None
-
-    if request.method == 'POST':
-
-        medicine = request.POST.get('medicine')
-        dosage = request.POST.get('dosage')
-
-        try:
-
-            Prescription.objects.create(
-                medicine=medicine,
-                dosage=dosage,
-            )
-            error = "no"
-        except Exception as e:
-            error = "yes"
-            print(f"Error: {e}")
-
-    context = {'error': error}
-    return render(request, 'add_prescription.html', context)
 
 def Add_doctor(request):
     error = None
@@ -207,8 +180,58 @@ def Doctor_details(request):
     p={'doctor':doctor}
     return render(request,'doctor_details.html',p)
 
-def Delete_doctor(pid):
+def Delete_doctor(request,pid):
 
     doctor=Doctor.objects.get(id=pid)
     doctor.delete()
     return redirect('doctor_details')
+
+
+def Checkout_session(request):
+
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        amount = 100
+
+        line_items = [
+            {
+                'price_data': {
+                    'currency': 'INR',
+                    'product_data': {
+                        'name': name,
+                    },
+                    'unit_amount': amount * 100,
+                },
+                'quantity': 1,
+            }
+        ]
+
+
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=line_items,
+            mode='payment',
+            success_url=request.build_absolute_uri(reverse('success')),
+            cancel_url=request.build_absolute_uri(reverse('cancel'))
+        )
+
+
+        return redirect(checkout_session.url, code=303)
+
+    return render(request, 'payment.html')
+
+
+def success(request):
+    amount= Appointment.objects.all()
+
+    return render(request,'success.html')
+
+
+def cancel(request):
+    amount = Appointment.objects.all()
+
+    return render(request, 'cancel.html')
+
+
